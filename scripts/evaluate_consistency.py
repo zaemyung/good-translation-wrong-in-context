@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser(description='Evaluate accuracy on consistency t
 parser.add_argument('--repo-dir', type=str, required=True,
                     help='Path to your local "good-translation-wrong-in-context"')
 parser.add_argument('--test', type=str,required=True,
-                    choices=['deixis_test', 'deixis_dev', 'lex_cohesion_test', 'lex_cohesion_dev', 'ellipsis_vp', 'ellipsis_infl', 'deixis_test_dev_merged', 'lex_cohesion_test_dev_merged'],
+                    choices=['deixis_test', 'deixis_dev', 'lex_cohesion_test', 'lex_cohesion_dev', 'ellipsis_vp', 'ellipsis_infl', 'deixis', 'lex_cohesion'],
                    help="""Test set name.""")
 parser.add_argument('--scores', type=str, required=True,
                     help="Loss of your model on the test set examples, one score per line")
@@ -31,11 +31,11 @@ def get_scores(json_data, scores, is_maximize):
     return res
 
 def evaluate(repo_dir, testset_name, scores_fname, is_maximize):
-    if testset_name == 'deixis_test_dev_merged':
+    if testset_name == 'deixis':
         test_data = json.load(open("{}/consistency_testsets/{}.json".format(repo_dir, 'deixis_test')))
         dev_data = json.load(open("{}/consistency_testsets/{}.json".format(repo_dir, 'deixis_dev')))
         json_data = test_data + dev_data
-    elif testset_name == 'lex_cohesion_test_dev_merged':
+    elif testset_name == 'lex_cohesion':
         test_data = json.load(open("{}/consistency_testsets/{}.json".format(repo_dir, 'lex_cohesion_test')))
         dev_data = json.load(open("{}/consistency_testsets/{}.json".format(repo_dir, 'lex_cohesion_dev')))
         json_data = test_data + dev_data
